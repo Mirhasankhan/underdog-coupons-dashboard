@@ -32,3 +32,21 @@ export interface Spot  {
   rating: number;
   reviews: Review[];
 };
+
+export interface CouponFormValues  {
+  couponName: string;
+  code: string;
+  activeFrom: string;
+  activeTo: string;
+  limitNumber: number;
+  usedFrom: number;
+};
+
+export interface RestaurantFormValues {
+  image: FileList;
+  video: FileList;
+  restaurantName: string;
+  location: string;
+  review: string;
+  phone: string;
+}

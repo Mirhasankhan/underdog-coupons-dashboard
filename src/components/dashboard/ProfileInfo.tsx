@@ -21,7 +21,7 @@ const ProfileInfo = () => {
 
   return (
     <div className="grid grid-cols-4 gap-5">
-      <div className="col-span-1 bg-white flex flex-col items-center p-4 rounded-md shadow-md">
+      <div className="col-span-1 bg-white flex flex-col items-center p-4 rounded-md shadow-[0px_4px_15px_rgba(255,69,58,0.15)]">
         <Image
           className="rounded-full"
           width={140}
@@ -49,7 +49,7 @@ const ProfileInfo = () => {
           Upload New Profile
         </button>
       </div>
-      <div className="col-span-3 bg-white p-4 rounded-md shadow-md">
+      <div className="col-span-3 bg-white p-4 rounded-md shadow-[0px_4px_15px_rgba(255,69,58,0.15)]">
         <UpdateProfile></UpdateProfile>
       </div>
     </div>

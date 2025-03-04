@@ -6,12 +6,8 @@ import { GoPackage } from "react-icons/go";
 import { CiCirclePlus } from "react-icons/ci";
 import { LuTableProperties } from "react-icons/lu";
 import { FcSalesPerformance } from "react-icons/fc";
-import {
-  UserRound,
-  LandPlot,
-  MessageCirclePlus,
-  LayoutDashboard,
-} from "lucide-react";
+import { RiHome5Fill } from "react-icons/ri";
+import { Settings,  Bell,Dock,FileChartColumn } from "lucide-react";
 
 export const sidebarItems = (role: TRoles): SidbarItem[] => {
   const roleMenus: SidbarItem[] = [];
@@ -21,23 +17,28 @@ export const sidebarItems = (role: TRoles): SidbarItem[] => {
       roleMenus.push({
         title: "Dashboard",
         path: `/${role}`,
-        icon: LayoutDashboard,
+        icon: RiHome5Fill,
       });
       roleMenus.push({
-        title: "Manage Users",
-        path: `/manage-users`,
-        icon: LandPlot,
+        title: "Coupon",
+        path: `/coupon`,
+        icon: Bell,
       });
       roleMenus.push({
-        title: "Reviews & Feedback",
-        path: `/reviews-feedback`,
-        icon: MessageCirclePlus,
+        title: "Restaurant",
+        path: `/restaurant`,
+        icon: Dock,
+      });
+      roleMenus.push({
+        title: "Review",
+        path: `/review`,
+        icon: FileChartColumn,
       });
 
       roleMenus.push({
-        title: "Profile",
-        path: `/manage-profile`,
-        icon: UserRound,
+        title: "Settings",
+        path: `/settings`,
+        icon: Settings,
       });
       break;
 

@@ -20,15 +20,15 @@ const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (value: bo
   };
 
   return (
-    <div className="h-screen">
+    <div>
       {sidebarItems("admin" as TRoles).map((item, index) => (
         <div key={index}>
           {item.children && item.children.length > 0 ? (
             <div
               onClick={() => toggleMenu(item.path)}
               className={`cursor-pointer ${
-                openMenus[item.path] ? "bg-[#FA7E34] text-white" : ""
-              } hover:bg-[#FA7E34] font-medium hover:text-white my-4 ${
+                openMenus[item.path] ? "bg-[#F13300] text-white" : ""
+              } hover:bg-[#F13300] font-medium hover:text-white my-4 ${
                 !isOpen && "justify-center md:justify-start"
               } p-2 mx-3 rounded-md flex items-center`}
             >
@@ -44,14 +44,14 @@ const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (value: bo
               <div
                 onClick={handleLinkClick} 
                 className={`cursor-pointer ${
-                  pathName === `/dashboard${item.path}` ? "bg-[#FA7E34] font-medium text-white" : ""
-                } hover:bg-[#FA7E34] font-medium hover:text-white my-4 ${
+                  pathName === `/dashboard${item.path}` ? "bg-[#F13300] font-medium !text-white" : ""
+                } hover:bg-[#F13300]  font-medium hover:text-white my-4 ${
                   !isOpen && "justify-center md:justify-start"
-                } p-2 mx-3 rounded-md flex items-center`}
+                } p-2 py-3 mx-8 rounded-xl text-[#718096] flex items-center`}
               >
                 {item.icon && <p className="text-xl">{<item.icon />}</p>}
-                <h1 className="pl-1 md:hidden">{item.title}</h1>
-                <h1 className="pl-1 hidden md:block">{item.title}</h1>
+                <h1 className="pl-2 md:hidden">{item.title}</h1>
+                <h1 className="pl-2 hidden md:block">{item.title}</h1>
               </div>
             </Link>
           )}
