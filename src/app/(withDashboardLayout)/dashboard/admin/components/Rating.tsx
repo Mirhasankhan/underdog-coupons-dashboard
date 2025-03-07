@@ -1,8 +1,19 @@
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { FaStar } from "react-icons/fa";
 import { Progress } from "@/components/ui/progress";
+import { useAllReviewsQuery } from "@/redux/features/reviews/reviewApi";
 
 const Rating = () => {
+  const { data: reviews } = useAllReviewsQuery("");
+  const averageRating = reviews?.result?.reviews.length
+    ? (
+        reviews.result.reviews.reduce(
+          (sum: number, review: { rating: number }) => sum + review.rating,
+          0
+        ) / reviews.result.reviews.length
+      ).toFixed(1)
+    : 0;
+
   return (
     <div className="p-4 shadow-[0px_4px_15px_rgba(255,69,58,0.15)] rounded-md">
       <div className="flex items-center gap-1 border-b pb-5">
@@ -11,22 +22,53 @@ const Rating = () => {
       </div>
       <div className="grid grid-cols-2 pt-4">
         <div className="flex flex-col items-center p-3 border-r">
-          <h1 className="text-3xl font-semibold"> 4.8</h1>
-          <div className="flex w-full justify-between text-orange-400 py-2 text-xl">
+          <h1 className="text-3xl font-semibold">{averageRating}</h1>
+          <div className="flex w-full justify-between text-orange-400 py-4 text-xl">
             <FaStar></FaStar>
             <FaStar></FaStar>
             <FaStar></FaStar>
             <FaStar></FaStar>
             <FaStar></FaStar>
           </div>
-          <h1>(4.8k reviews)</h1>
+          <h1>({reviews?.result?.reviews.length} reviews)</h1>
         </div>
         <div className="p-3 flex flex-col gap-3">
-          <Progress value={80} className="bg-gray-200 [&>*]:bg-green-500" />
-          <Progress value={60} className="bg-gray-200 [&>*]:bg-green-500" />
-          <Progress value={50} className="bg-gray-200 [&>*]:bg-green-500" />
-          <Progress value={40} className="bg-gray-200 [&>*]:bg-green-500" />
-          <Progress value={10} className="bg-gray-200 [&>*]:bg-green-500" />
+          <div className="flex items-center gap-2">
+            <h1 className="font-medium">5</h1>
+            <Progress
+              value={reviews?.result?.ratingPercentages[4].percentage}
+              className="bg-gray-200 [&>*]:bg-green-500"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <h1 className="font-medium">4</h1>
+            <Progress
+              value={reviews?.result?.ratingPercentages[3].percentage}
+              className="bg-gray-200 [&>*]:bg-green-500"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <h1 className="font-medium">3</h1>
+            <Progress
+              value={reviews?.result?.ratingPercentages[2].percentage}
+              className="bg-gray-200 [&>*]:bg-green-500"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <h1 className="font-medium">2</h1>
+            <Progress
+              value={reviews?.result?.ratingPercentages[1].percentage}
+              className="bg-gray-200 [&>*]:bg-green-500"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <h1 className="font-medium">1</h1>
+            <Progress
+              value={reviews?.result?.ratingPercentages[0].percentage}
+              className="bg-gray-200 [&>*]:bg-green-500"
+            />
+          </div>
+          
         </div>
       </div>
     </div>

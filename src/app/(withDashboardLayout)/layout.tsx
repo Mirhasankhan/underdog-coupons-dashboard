@@ -12,6 +12,7 @@ import logo from "../../assets/image 1.png";
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+
   return (
     <Providers>
       <div className="grid grid-cols-5 h-screen bg-[#F9F9F9] overflow-hidden">

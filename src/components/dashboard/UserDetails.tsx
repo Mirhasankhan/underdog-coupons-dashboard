@@ -2,8 +2,25 @@ import { Settings } from "lucide-react";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAppDispatch } from "@/redux/hooks";
+import { setUser } from "@/redux/features/auth/authSlice";
+import { useRouter } from "next/navigation";
 
 const UserDetails = ({ isOpen }: { isOpen: boolean }) => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const singOut = ()=>{
+      dispatch(
+          setUser({
+            name: "hasan",
+            email: "",
+            role: "",
+            token: "",
+          })
+        );
+        router.push("/")
+      
+  }
   return (
     <AnimatePresence>
       {isOpen && (
@@ -31,7 +48,7 @@ const UserDetails = ({ isOpen }: { isOpen: boolean }) => {
             <Settings />
             <h1>Settings</h1>
           </div>
-          <Button className="w-full mt-3" variant={"outline"}>
+          <Button onClick={()=>singOut()} className="w-full mt-3" variant={"outline"}>
             Logout
           </Button>
         </motion.div>

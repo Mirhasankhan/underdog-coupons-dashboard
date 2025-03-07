@@ -1,64 +1,27 @@
-import React from "react";
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Eye, Plus } from "lucide-react";
-import { HiOutlineDotsVertical } from "react-icons/hi";
+import {  Loader, Plus } from "lucide-react";
+import { useRestaurantsQuery } from "@/redux/features/restaurant/restaurantApi";
+import { TRestaurant } from "@/types/common";
+import Restaurant from "./Restaurant";
 
 const AllRestaurants = ({
   setIsAdd,
 }: {
   setIsAdd: (value: boolean) => void;
 }) => {
-  const invoices = [
-    {
-      invoice: "INV001",
-      paymentStatus: "Paid",
-      totalAmount: "$250.00",
-      paymentMethod: "Credit Card",
-    },
-    {
-      invoice: "INV002",
-      paymentStatus: "Pending",
-      totalAmount: "$150.00",
-      paymentMethod: "PayPal",
-    },
-    {
-      invoice: "INV003",
-      paymentStatus: "Unpaid",
-      totalAmount: "$350.00",
-      paymentMethod: "Bank Transfer",
-    },
-    {
-      invoice: "INV004",
-      paymentStatus: "Paid",
-      totalAmount: "$450.00",
-      paymentMethod: "Credit Card",
-    },
-    {
-      invoice: "INV005",
-      paymentStatus: "Paid",
-      totalAmount: "$550.00",
-      paymentMethod: "PayPal",
-    },
-    {
-      invoice: "INV006",
-      paymentStatus: "Pending",
-      totalAmount: "$200.00",
-      paymentMethod: "Bank Transfer",
-    },
-    {
-      invoice: "INV007",
-      paymentStatus: "Unpaid",
-      totalAmount: "$300.00",
-      paymentMethod: "Credit Card",
-    },
-  ];
+  const { data: allRestaurants, isLoading } = useRestaurantsQuery("");
+
+
+  if (isLoading) {
+    return <Loader className="animate-spin mx-auto" size={80}></Loader>;
+  }
+
   return (
     <div>
       <div className="flex justify-between pb-5 items-center">
@@ -72,33 +35,26 @@ const AllRestaurants = ({
           Add Restaurant
         </button>
       </div>
-      <Table className="border rounded-md">
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[200px]">Name</TableHead>
-            <TableHead>Review</TableHead>
-            <TableHead>Loation</TableHead>
-            <TableHead>Contact</TableHead>
-            <TableHead>Status</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice}>
-              <TableCell className="font-medium">{invoice.invoice}</TableCell>
-              <TableCell className="text-red-500">
-                {invoice.paymentStatus}
-              </TableCell>
-              <TableCell>{invoice.paymentMethod}</TableCell>
-              <TableCell>{invoice.paymentMethod}</TableCell>
-              <TableCell className="flex items-center gap-2">
-                <Eye />
-                <HiOutlineDotsVertical />
-              </TableCell>
+      <div>
+        {
+          allRestaurants?.result?.length > 0 ? <Table className="border rounded-md">
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Review</TableHead>
+              <TableHead>Loation</TableHead>
+              <TableHead>Contact</TableHead>
+              <TableHead>Status</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {allRestaurants?.result?.map((restaurant: TRestaurant) => (
+             <Restaurant key={restaurant.id} restaurant={restaurant}></Restaurant>
+            ))}
+          </TableBody>
+        </Table>:<p className="text-center text-red-600 text-2xl pt-12">No Restaurant Found</p>
+        }
+      </div>
     </div>
   );
 };

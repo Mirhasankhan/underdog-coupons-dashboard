@@ -112,7 +112,7 @@ const AddRestaurant = ({
             <label className="block font-medium">Phone</label>
             <input
               type="tel"
-              {...register("phone", {
+              {...register("contact", {
                 required: "Phone number is required",
                 pattern: {
                   value: /^[0-9]{10,15}$/,
@@ -122,8 +122,8 @@ const AddRestaurant = ({
               className="w-full p-2 border rounded-md"
               placeholder="Enter phone number"
             />
-            {errors.phone && (
-              <p className="text-red-500 text-sm">{errors.phone.message}</p>
+            {errors.contact && (
+              <p className="text-red-500 text-sm">{errors.contact.message}</p>
             )}
           </div>
         </div>

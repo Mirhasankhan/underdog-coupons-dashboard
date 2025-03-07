@@ -1,18 +1,36 @@
 "use client";
 
+import { useCreateCouponMutation } from "@/redux/features/coupon/couponApi";
 import { CouponFormValues } from "@/types/common";
+import { generateRandomCode } from "@/utils/generateRandomCode";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { toast } from "sonner";
 
 const AddCoupon = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
+  const [createCoupon] = useCreateCouponMutation();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm<CouponFormValues>();
 
-  const onSubmit: SubmitHandler<CouponFormValues> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<CouponFormValues> = async (data) => {
+    const activeFromISO = new Date(data.activeFrom).toISOString();
+    const activeToISO = new Date(data.activeTo).toISOString();
+    const code = generateRandomCode()
+    const newCoupon = {
+      ...data,
+      code,
+      activeFrom: activeFromISO,
+      activeTo: activeToISO,
+    };
+    const res = await createCoupon(newCoupon);
+    if(res.data.success == true){
+      toast.success(res.data.message)
+    }
+    reset()
   };
 
   return (
@@ -25,8 +43,24 @@ const AddCoupon = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
         <h1 className="font-semibold">Add Coupon</h1>
       </div>
       <h1 className="pt-4 pb-2 font-medium">Coupon Overview</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className=" rounded-lg  bg-white">
+      <form onSubmit={handleSubmit(onSubmit)} className="rounded-lg bg-white">
+       
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="mb-4">
+          <label className="block font-medium">Plan Type</label>
+          <select
+            {...register("plan", {
+              required: "Plan Type is required",
+            })}
+            className="w-full p-2 border rounded-md"
+          >
+            <option value="BASIC">BASIC</option>
+            <option value="PREMIUM">PREMIUM</option>
+          </select>
+          {errors.plan && (
+            <p className="text-red-500 text-sm">{errors.plan.message}</p>
+          )}
+        </div>
           <div className="mb-4">
             <label className="block font-medium">Coupon Name</label>
             <input
@@ -42,18 +76,7 @@ const AddCoupon = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
               </p>
             )}
           </div>
-
-          <div className="mb-4">
-            <label className="block font-medium">Code</label>
-            <input
-              {...register("code", { required: "Code is required" })}
-              className="w-full p-2 border rounded-md"
-              placeholder="Enter coupon code"
-            />
-            {errors.code && (
-              <p className="text-red-500 text-sm">{errors.code.message}</p>
-            )}
-          </div>
+          
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -96,6 +119,7 @@ const AddCoupon = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
               {...register("limitNumber", {
                 required: "Limit Number is required",
                 min: { value: 1, message: "Limit Number must be at least 1" },
+                valueAsNumber: true,
               })}
               className="w-full p-2 border rounded-md"
               placeholder="Enter limit number"
@@ -111,21 +135,24 @@ const AddCoupon = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
             <label className="block font-medium">Used From</label>
             <input
               type="number"
-              {...register("usedFrom", {
+              {...register("used", {
                 required: "Used From is required",
-                min: { value: 0, message: "Used From cannot be negative" },
+                min: { value: 0, message: "Used From cannot be negative" },valueAsNumber:true
               })}
               className="w-full p-2 border rounded-md"
               placeholder="Enter used from number"
             />
-            {errors.usedFrom && (
-              <p className="text-red-500 text-sm">{errors.usedFrom.message}</p>
+            {errors.used && (
+              <p className="text-red-500 text-sm">{errors.used.message}</p>
             )}
           </div>
         </div>
 
         <div className="flex justify-end gap-4 mt-5">
-          <button  onClick={() => setIsAdd(false)} className="bg-transparent border border-[#F13300] py-1 px-4 rounded-md  text-[#F13300]">
+          <button
+            onClick={() => setIsAdd(false)}
+            className="bg-transparent border border-[#F13300] py-1 px-4 rounded-md text-[#F13300]"
+          >
             Cancel
           </button>
           <button
@@ -141,3 +168,4 @@ const AddCoupon = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
 };
 
 export default AddCoupon;
+

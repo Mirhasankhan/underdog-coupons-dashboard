@@ -39,7 +39,8 @@ export interface CouponFormValues  {
   activeFrom: string;
   activeTo: string;
   limitNumber: number;
-  usedFrom: number;
+  used: number;
+  plan:string
 };
 
 export interface RestaurantFormValues {
@@ -48,5 +49,26 @@ export interface RestaurantFormValues {
   restaurantName: string;
   location: string;
   review: string;
-  phone: string;
+  contact: string;
+}
+
+export interface TCoupon {  
+  id:string
+  plan: string
+  couponName: string;
+  code: string;
+  activeFrom: Date;
+  activeTo: Date;
+  limitNumber: number;
+  used: number;   
+}
+
+export interface TRestaurant {
+  id:string
+  imageUrl: string; 
+  restaurantName: string;
+  contact: string;
+  location: string;
+  rating: number;
+  reviews: [{userName:string,rating:number,comment?:string, createdAt:string}]
 }

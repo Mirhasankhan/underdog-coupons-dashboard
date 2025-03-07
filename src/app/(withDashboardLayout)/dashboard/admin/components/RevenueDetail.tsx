@@ -8,21 +8,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-
-const chartData = [
-  { month: "January", positive: 186, negative: 80 },
-  { month: "February", positive: 105, negative: 200 },
-  { month: "March", positive: 137, negative: 120 },
-  { month: "April", positive: 73, negative: 190 },
-  { month: "May", positive: 209, negative: 130 },
-  { month: "June", positive: 114, negative: 140 },
-  { month: "July", positive: 465, negative: 80 },
-  { month: "August", positive: 205, negative: 100 },
-  { month: "September", positive: 137, negative: 120 },
-  { month: "October", positive: 73, negative: 290 },
-  { month: "November", positive: 49, negative: 130 },
-  { month: "December", positive: 114, negative: 140 },
-];
+import { useAllReviewsQuery } from "@/redux/features/reviews/reviewApi";
+import { chartData } from "@/utils/chartData";
 
 const chartConfig = {
   positive: {
@@ -36,6 +23,11 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 const ReviewStatics = () => {
+  const { data: allReviews } = useAllReviewsQuery("");
+  const newData = allReviews?.result?.monthWiseReviews;
+
+  const monthWiseData = newData ? chartData(newData) : [];
+
   return (
     <Card className="border-none shadow-[0px_4px_15px_rgba(255,69,58,0.15)]">
       <CardHeader>
@@ -53,20 +45,13 @@ const ReviewStatics = () => {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <AreaChart
-            accessibilityLayer
-            data={chartData}
-            // margin={{
-            //   left: 6,
-            //   right: 6,
-            // }}
-          >
+          <AreaChart accessibilityLayer data={monthWiseData}>
             <CartesianGrid vertical={false} />
             <YAxis
               tickLine={false}
               axisLine={false}
               tickMargin={4}
-              domain={[0, 600]}
+              domain={[0, 10]}
             />
             <XAxis
               dataKey="month"
@@ -100,14 +85,10 @@ const ReviewStatics = () => {
                 x2="0"
                 y2="1"
               >
-                <stop offset="0%" stopColor="#F13300" stopOpacity="0.9" />          
-                <stop offset="30%" stopColor="#FFA899" stopOpacity="0.6" />       
-                <stop offset="60%" stopColor="#FFD4C6" stopOpacity="0.4" />      
-                <stop
-                  offset="100%"
-                  stopColor="#FFFFFF"
-                  stopOpacity="0.2"
-                />             
+                <stop offset="0%" stopColor="#F13300" stopOpacity="0.9" />
+                <stop offset="30%" stopColor="#FFA899" stopOpacity="0.6" />
+                <stop offset="60%" stopColor="#FFD4C6" stopOpacity="0.4" />
+                <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.2" />
               </linearGradient>
             </defs>
 

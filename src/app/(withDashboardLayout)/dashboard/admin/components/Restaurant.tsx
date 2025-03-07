@@ -1,66 +1,67 @@
+"use client";
 import Image from "next/image";
-import resImag from "../../../../../assets/Rectangle.png";
+import React from "react";
 import { FaStar } from "react-icons/fa";
-import userImg from "../../../../../assets/Ellipse.png";
+import { useRestaurantsQuery } from "@/redux/features/restaurant/restaurantApi";
+import { TRestaurant } from "@/types/common";
 
 const Restaurant = () => {
-  return (
-    <div className="p-4 shadow-[0px_4px_15px_rgba(255,69,58,0.15)] h-80 rounded-md overflow-auto">
-      <h1 className="font-semibold">Restaurant</h1>
+  const { data: allRestaurants } = useRestaurantsQuery("");
+  const reviewedRestaurants = allRestaurants?.result?.filter(
+    (restaurant: { reviews: [] }) => restaurant.reviews.length > 0
+  );
 
-      <div className="grid grid-cols-1 md:grid-cols-2 pt-4">
-        <div className="flex gap-4 items-center p-4 border-r">
-          <Image src={resImag} height={50} width={100} alt=""></Image>
-          <div>
-            <h1 className="text-xl font-medium">The Breakfast Club</h1>
-            <div className="flex items-center">
-              <FaStar /> 4.7 (1.7k)
+  return (
+    <div className="h-64 overflow-y-scroll">
+      <h1 className="text-xl font-medium pb-2">Restaurant</h1>
+      {reviewedRestaurants?.slice(0,3)?.map((review: TRestaurant) => {
+        return (
+          <div
+            key={review.id}
+            className="grid grid-cols-1 border-b md:grid-cols-2 pt-4"
+          >
+            <div className="col-span-1 flex gap-4 items-center p-4">
+              <Image
+                src={review.imageUrl}
+                className="rounded-lg"
+                height={50}
+                width={100}
+                alt=""
+              ></Image>
+              <div>
+                <h1 className="text-xl font-medium">{review.restaurantName}</h1>
+                <div className="flex gap-2 items-center">
+                  <FaStar className="text-orange-400" />
+                  {review.reviews.length > 0
+                    ? (
+                        review.reviews.reduce((sum, r:{rating:number}) => sum + r.rating, 0) /
+                        review.reviews.length
+                      ).toFixed(1)
+                    : "0"}{" "}
+                  {/* Calculate average rating */}({review.reviews.length}{" "}
+                  reviews)
+                </div>
+              </div>
+            </div>
+            <div className="col-span-1 p-4 gap-3">
+              <div className="flex gap-8 items-center">
+                <h1 className="md:text-xl font-semibold">{review.reviews["0"].userName}</h1>
+                <div className="flex text-orange-400">
+                  <FaStar />
+                  <FaStar />
+                  <FaStar />
+                  <FaStar />
+                  <FaStar />
+                </div>
+              </div>
+              <p className="py-1">
+              {review.reviews["0"].comment}
+              </p>
+              <p className="text-gray-500">6 days ago</p>
             </div>
           </div>
-        </div>
-        <div className="p-4  gap-3">
-          <div className="flex justify-between items-center">
-            <Image alt="" src={userImg} height={60} width={60}></Image>
-            <h1 className="md:text-xl font-semibold">Charlotte Hain</h1>
-            <div className="flex text-orange-400">
-              <FaStar />
-              <FaStar />
-              <FaStar />
-              <FaStar />
-              <FaStar />
-            </div>
-          </div>
-          <p className="py-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. At, nesciunt. Error dolores ullam id! Reprehenderit.</p>
-          <p className="text-gray-500">6 days ago</p>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2  pt-4">
-        <div className="flex gap-4 items-center p-4 border-r">
-          <Image src={resImag} height={50} width={100} alt=""></Image>
-          <div>
-            <h1 className="text-xl font-medium">The Breakfast Club</h1>
-            <div className="flex items-center">
-              <FaStar /> 4.7 (1.7k)
-            </div>
-          </div>
-        </div>
-        <div className="p-4  gap-3">
-          <div className="flex justify-between items-center">
-            <Image alt="" src={userImg} height={60} width={60}></Image>
-            <h1 className="md:text-xl font-semibold">Charlotte Hain</h1>
-            <div className="flex text-orange-400">
-              <FaStar />
-              <FaStar />
-              <FaStar />
-              <FaStar />
-              <FaStar />
-            </div>
-          </div>
-          <p className="py-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. At, nesciunt. Error dolores ullam id! Reprehenderit.</p>
-          <p className="text-gray-500">6 days ago</p>
-        </div>
-      </div>
-      
+        );
+      })}
     </div>
   );
 };
