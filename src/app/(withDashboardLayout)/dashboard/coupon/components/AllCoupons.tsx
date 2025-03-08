@@ -42,7 +42,7 @@ const AllCoupons = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
             <TableHead>Active From</TableHead>
             <TableHead>Active To</TableHead>
             <TableHead>Limit Number</TableHead>
-            <TableHead>Used From</TableHead>
+            <TableHead>Used</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

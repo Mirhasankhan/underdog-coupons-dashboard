@@ -51,7 +51,7 @@ const ReviewStatics = () => {
               tickLine={false}
               axisLine={false}
               tickMargin={4}
-              domain={[0, 10]}
+              domain={[0, 15]}
             />
             <XAxis
               dataKey="month"

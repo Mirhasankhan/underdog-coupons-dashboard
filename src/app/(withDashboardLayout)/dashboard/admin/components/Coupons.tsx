@@ -3,24 +3,27 @@ import {
   useDeleteCouponMutation,
 } from "@/redux/features/coupon/couponApi";
 import { TCoupon } from "@/types/common";
-import React from "react";
+import { Loader } from "lucide-react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 
 const Coupons = () => {
   const { data: allCoupons } = useCouponsQuery("");
+  const [processing, setProcessing] = useState<string | null>(null);
   const [deleteCoupon] = useDeleteCouponMutation();
   const unUsedCoupons = allCoupons?.result?.filter(
     (coupon: { used: number }) => coupon.used < 1
   );
 
   const handleDeleteCoupon = async (couponId: string) => {
-   const res = await deleteCoupon(couponId)
-   if(res.data.success == true){
-    toast.success(res.data.message)
-   }
-   else{
-    toast.error(res.data.message)
-   }
+    setProcessing(processing === couponId ? null : couponId)
+    const res = await deleteCoupon(couponId);
+    if (res.data.success == true) {
+      toast.success(res.data.message);
+      setProcessing(null)
+    } else {
+      toast.error(res.data.message);
+    }
   };
 
   return (
@@ -31,12 +34,12 @@ const Coupons = () => {
           className="flex justify-between py-2 text-[#06402B]  items-center"
           key={coupon.id}
         >
-          <h1>{coupon.couponName}</h1>
+          <h1 className="font-medium">{coupon.code}</h1>
           <button
             onClick={() => handleDeleteCoupon(coupon.id)}
             className="text-[#F13300] font-medium px-3 py-1 rounded-md bg-red-300"
           >
-            Delete
+            {processing == coupon.id ? <Loader className="animate-spin text-gray-700"></Loader> : "Delete"}
           </button>
         </div>
       ))}

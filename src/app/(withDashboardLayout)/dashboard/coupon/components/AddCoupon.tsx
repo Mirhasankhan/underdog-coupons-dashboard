@@ -13,13 +13,24 @@ const AddCoupon = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
     register,
     handleSubmit,
     formState: { errors },
-    reset
-  } = useForm<CouponFormValues>();
+    reset,
+  } = useForm<CouponFormValues>({
+    defaultValues: {
+      used: 0,
+    },
+  });
 
   const onSubmit: SubmitHandler<CouponFormValues> = async (data) => {
     const activeFromISO = new Date(data.activeFrom).toISOString();
     const activeToISO = new Date(data.activeTo).toISOString();
-    const code = generateRandomCode()
+
+    if (new Date(activeFromISO) > new Date(activeToISO)) {
+      return toast.error(
+        "The 'activeFrom' date cannot be later than the 'activeTo' date."
+      );
+    }
+
+    const code = generateRandomCode();
     const newCoupon = {
       ...data,
       code,
@@ -27,10 +38,10 @@ const AddCoupon = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
       activeTo: activeToISO,
     };
     const res = await createCoupon(newCoupon);
-    if(res.data.success == true){
-      toast.success(res.data.message)
+    if (res.data.success == true) {
+      toast.success(res.data.message);
+      reset();
     }
-    reset()
   };
 
   return (
@@ -44,23 +55,22 @@ const AddCoupon = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
       </div>
       <h1 className="pt-4 pb-2 font-medium">Coupon Overview</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="rounded-lg bg-white">
-       
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="mb-4">
-          <label className="block font-medium">Plan Type</label>
-          <select
-            {...register("plan", {
-              required: "Plan Type is required",
-            })}
-            className="w-full p-2 border rounded-md"
-          >
-            <option value="BASIC">BASIC</option>
-            <option value="PREMIUM">PREMIUM</option>
-          </select>
-          {errors.plan && (
-            <p className="text-red-500 text-sm">{errors.plan.message}</p>
-          )}
-        </div>
+          <div className="mb-4">
+            <label className="block font-medium">Plan Type</label>
+            <select
+              {...register("plan", {
+                required: "Plan Type is required",
+              })}
+              className="w-full p-2 border rounded-md"
+            >
+              <option value="BASIC">BASIC</option>
+              <option value="PREMIUM">PREMIUM</option>
+            </select>
+            {errors.plan && (
+              <p className="text-red-500 text-sm">{errors.plan.message}</p>
+            )}
+          </div>
           <div className="mb-4">
             <label className="block font-medium">Coupon Name</label>
             <input
@@ -76,7 +86,6 @@ const AddCoupon = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
               </p>
             )}
           </div>
-          
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -132,12 +141,14 @@ const AddCoupon = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
           </div>
 
           <div className="mb-4">
-            <label className="block font-medium">Used From</label>
+            <label className="block font-medium">Used</label>
             <input
+              readOnly
               type="number"
               {...register("used", {
                 required: "Used From is required",
-                min: { value: 0, message: "Used From cannot be negative" },valueAsNumber:true
+                min: { value: 0, message: "Used From cannot be negative" },
+                valueAsNumber: true,
               })}
               className="w-full p-2 border rounded-md"
               placeholder="Enter used from number"
@@ -168,4 +179,3 @@ const AddCoupon = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
 };
 
 export default AddCoupon;
-
