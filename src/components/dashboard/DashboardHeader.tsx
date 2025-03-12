@@ -1,5 +1,4 @@
-import { Bell, ChevronDown, ChevronUp } from "lucide-react";
-import Image from "next/image";
+import { Bell, ChevronDown, ChevronUp, CircleUserRound } from "lucide-react";
 import UserDetails from "./UserDetails";
 import { useState } from "react";
 import DashboardSearch from "./DashboardSearch";
@@ -30,13 +29,7 @@ const DashboardHeader = () => {
           onClick={() => setIsOpen(!isOpen)}
           className="flex relative items-center gap-2 bg-[#FAFAFA] p-1 rounded-md cursor-pointer"
         >
-          <Image
-            className="rounded-full"
-            src="https://media.istockphoto.com/id/2017256409/photo/young-asian-man-on-the-metro.webp?a=1&b=1&s=612x612&w=0&k=20&c=BPUvlXun78PFL49ZqJwdhQsgAa_OhTh9Qpq-jvgdJmg="
-            height={40}
-            width={50}
-            alt="Profile Picture"
-          />
+          <CircleUserRound />
           <div className="text-sm hidden md:block">
             <h1 className="font-semibold">{decoded?.userName}</h1>
           </div>

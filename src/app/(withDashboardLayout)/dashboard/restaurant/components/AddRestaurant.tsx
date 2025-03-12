@@ -6,6 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { useCreateRestaurnatMutation } from "@/redux/features/restaurant/restaurantApi";
 import { toast } from "sonner";
+import { Loader } from "lucide-react";
 
 const AddRestaurant = ({
   setIsAdd,
@@ -15,6 +16,7 @@ const AddRestaurant = ({
   const [createRestaurant] = useCreateRestaurnatMutation();
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [videoFiles, setVideoFiles] = useState<File[]>([]);
+  const [isLoading, setIsloading] = useState(false);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -40,6 +42,7 @@ const AddRestaurant = ({
       toast.error("An image and a video are required!");
       return;
     }
+    setIsloading(true);
 
     const formData = new FormData();
     imageFiles.forEach((file) => formData.append("imageUrl", file));
@@ -55,6 +58,7 @@ const AddRestaurant = ({
     if (response.data.success == true) {
       reset();
       toast.success("Restaurant Added Successfully");
+      setIsloading(false);
     } else {
       toast.error("Something went wrong");
     }
@@ -167,15 +171,17 @@ const AddRestaurant = ({
         <div className="flex justify-end gap-4 mt-5">
           <button
             onClick={() => setIsAdd(false)}
+            disabled={isLoading}
             className="bg-transparent border border-[#F13300] py-1 px-4 rounded-md text-[#F13300]"
           >
             Cancel
           </button>
           <button
             type="submit"
+            disabled={isLoading}
             className="bg-[#F13300] text-white py-1 px-5 font-medium rounded-md"
           >
-            Save
+            {isLoading ? <Loader className="animate-spin"></Loader> : "Save"}
           </button>
         </div>
       </form>

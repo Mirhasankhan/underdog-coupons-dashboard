@@ -1,26 +1,27 @@
-import { Settings } from "lucide-react";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
+import { JWTDecode } from "@/utils/jwt";
 
 const UserDetails = ({ isOpen }: { isOpen: boolean }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const singOut = ()=>{
-      dispatch(
-          setUser({
-            name: "",
-            email: "",
-            role: "",
-            token: "",
-          })
-        );
-        router.push("/")
-      
-  }
+  const { decoded } = JWTDecode();
+  const singOut = () => {
+    dispatch(
+      setUser({
+        name: "",
+        email: "",
+        role: "",
+        token: "",
+      })
+    );
+    localStorage.removeItem("token");
+    router.push("/");
+  };
   return (
     <AnimatePresence>
       {isOpen && (
@@ -40,15 +41,15 @@ const UserDetails = ({ isOpen }: { isOpen: boolean }) => {
               alt="Profile Picture"
             />
             <div>
-              <h1 className="text-xl font-semibold">User Name</h1>
-              <p>example@gmail.com</p>
+              <h1 className="text-xl font-semibold">{decoded?.userName}</h1>
+              <p>{decoded?.email}</p>
             </div>
           </div>
-          <div className="flex items-center gap-1 pt-6 text-gray-600">
-            <Settings />
-            <h1>Settings</h1>
-          </div>
-          <Button onClick={()=>singOut()} className="w-full mt-3" variant={"outline"}>
+          <Button
+            onClick={() => singOut()}
+            className="w-full mt-3"
+            variant={"outline"}
+          >
             Logout
           </Button>
         </motion.div>

@@ -7,7 +7,7 @@ import { CiCirclePlus } from "react-icons/ci";
 import { LuTableProperties } from "react-icons/lu";
 import { FcSalesPerformance } from "react-icons/fc";
 import { RiHome5Fill } from "react-icons/ri";
-import { Settings,  Bell,Dock,FileChartColumn } from "lucide-react";
+import { Bell, Dock, FileChartColumn } from "lucide-react";
 
 export const sidebarItems = (role: TRoles): SidbarItem[] => {
   const roleMenus: SidbarItem[] = [];
@@ -35,11 +35,11 @@ export const sidebarItems = (role: TRoles): SidbarItem[] => {
         icon: FileChartColumn,
       });
 
-      roleMenus.push({
-        title: "Settings",
-        path: `/settings`,
-        icon: Settings,
-      });
+      // roleMenus.push({
+      //   title: "Settings",
+      //   path: `/settings`,
+      //   icon: Settings,
+      // });
       break;
 
     case userRoles.SELLER:

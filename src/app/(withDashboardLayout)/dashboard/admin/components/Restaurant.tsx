@@ -14,7 +14,7 @@ const Restaurant = () => {
   );
 
   return (
-    <div className="h-64 overflow-y-scroll">
+    <div className="h-[300px] overflow-y-scroll shadow-[0px_4px_15px_rgba(255,69,58,0.15)] p-4">
       <h1 className="text-xl font-medium pb-2">Restaurant Reviews</h1>
       {reviewedRestaurants?.slice(0, 3)?.map((review: TRestaurant) => {
         return (

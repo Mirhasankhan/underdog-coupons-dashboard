@@ -3,12 +3,15 @@
 import { useCreateCouponMutation } from "@/redux/features/coupon/couponApi";
 import { CouponFormValues } from "@/types/common";
 import { generateRandomCode } from "@/utils/generateRandomCode";
+import { Loader } from "lucide-react";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { toast } from "sonner";
 
 const AddCoupon = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
   const [createCoupon] = useCreateCouponMutation();
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -29,6 +32,7 @@ const AddCoupon = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
         "The 'activeFrom' date cannot be later than the 'activeTo' date."
       );
     }
+    setIsLoading(true);
 
     const code = generateRandomCode();
     const newCoupon = {
@@ -41,6 +45,7 @@ const AddCoupon = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
     if (res.data.success == true) {
       toast.success(res.data.message);
       reset();
+      setIsLoading(false);
     }
   };
 
@@ -162,15 +167,17 @@ const AddCoupon = ({ setIsAdd }: { setIsAdd: (value: boolean) => void }) => {
         <div className="flex justify-end gap-4 mt-5">
           <button
             onClick={() => setIsAdd(false)}
+            disabled={isLoading}
             className="bg-transparent border border-[#F13300] py-1 px-4 rounded-md text-[#F13300]"
           >
             Cancel
           </button>
           <button
+            disabled={isLoading}
             type="submit"
             className="bg-[#F13300] text-white py-1 px-5 font-medium rounded-md"
           >
-            Save
+            {isLoading ? <Loader className="animate-spin"></Loader> : "Save"}
           </button>
         </div>
       </form>

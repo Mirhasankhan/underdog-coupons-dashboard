@@ -22,7 +22,7 @@ const SignOut = () => {
   return (
     <button
       onClick={() => logOut()}
-      className="flex items-center gap-2 text-[#718096] font-medium mx-10"
+      className="flex items-center gap-2 text-[#718096] hover:text-[#F13300]  font-medium mx-10"
     >
       <CircleHelp />
       Sign Out

@@ -14,7 +14,7 @@ const RestaurantVideos = () => {
   return (
     <div>
       {restaurants?.result?.length > 0 ? (
-        <div className="shadow-[0px_4px_15px_rgba(255,69,58,0.15)] p-4 rounded-md">
+        <div className="shadow-[0px_4px_15px_rgba(255,69,58,0.15)] md:py-12 p-4 rounded-md">
           <div className="w-full">
             <video
               key={videoUrls[currentIndex].url}
@@ -27,14 +27,14 @@ const RestaurantVideos = () => {
               Your browser does not support the video tag.
             </video>
           </div>
-          <div className="flex mt-4 gap-4 justify-center">
+          <div className="flex mt-4 pt-2 gap-6 justify-center">
             {videoUrls.map((video: string, index: number) => (
               <h1
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={`rounded-full  text-white h-[8px] w-[8px] font-medium ${
                   currentIndex == index
-                    ? "bg-red-500 w-[40px]"
+                    ? "bg-red-500 w-[20px]"
                     : "bg-gray-500 hover:bg-red-600"
                 }`}
               ></h1>
@@ -42,7 +42,7 @@ const RestaurantVideos = () => {
           </div>
         </div>
       ) : (
-        "N"
+        "No Videos Found"
       )}
     </div>
   );
