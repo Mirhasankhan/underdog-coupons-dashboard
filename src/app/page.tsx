@@ -39,7 +39,7 @@ const AdminLogin = () => {
       router.push("/dashboard/admin");
       setIsLoading(false);
     } else if (response.error) {
-      toast.error(response?.error?.data?.message);
+      toast.error("Invalid Email or password");
       setIsLoading(false);
     }
   };
