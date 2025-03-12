@@ -13,35 +13,35 @@ export interface SidbarItem {
 }
 
 export interface TUser {
-  id:string
+  id: string;
   userName: string;
   role: string;
   status: string;
   email: string;
 }
 
-export interface Review  {
+export interface Review {
   rating: string;
   comment: string;
-};
+}
 
-export interface Spot  {
+export interface Spot {
   id: number;
   name: string;
   location: string;
   rating: number;
   reviews: Review[];
-};
+}
 
-export interface CouponFormValues  {
+export interface CouponFormValues {
   couponName: string;
   code: string;
   activeFrom: string;
   activeTo: string;
   limitNumber: number;
   used: number;
-  plan:string
-};
+  plan: string;
+}
 
 export interface RestaurantFormValues {
   image: FileList;
@@ -51,24 +51,30 @@ export interface RestaurantFormValues {
   review: string;
   contact: string;
 }
+export interface TLoginValues {
+  email: string;
+  password: string;
+}
 
-export interface TCoupon {  
-  id:string
-  plan: string
+export interface TCoupon {
+  id: string;
+  plan: string;
   couponName: string;
   code: string;
   activeFrom: Date;
   activeTo: Date;
   limitNumber: number;
-  used: number;   
+  used: number;
 }
 
 export interface TRestaurant {
-  id:string
-  imageUrl: string; 
+  id: string;
+  imageUrl: string;
   restaurantName: string;
   contact: string;
   location: string;
   rating: number;
-  reviews: [{userName:string,rating:number,comment?:string, createdAt:string}]
+  reviews: [
+    { userName: string; rating: number; comment?: string; createdAt: string }
+  ];
 }

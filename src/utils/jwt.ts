@@ -22,7 +22,7 @@ import { jwtDecode, JwtPayload } from "jwt-decode";
 
 interface ExtendedJwtPayload extends JwtPayload {
   role?: string;
-  name?: string;
+  userName?: string;
   email?: string;
 }
 

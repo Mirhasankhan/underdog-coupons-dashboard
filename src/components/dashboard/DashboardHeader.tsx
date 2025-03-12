@@ -4,27 +4,24 @@ import UserDetails from "./UserDetails";
 import { useState } from "react";
 import DashboardSearch from "./DashboardSearch";
 import DashboardNotifications from "./DashboardNotifications";
-import { useAppSelector } from "@/redux/hooks";
-import { useCurrentUser } from "@/redux/features/auth/authSlice";
 import { CiSearch } from "react-icons/ci";
+import { JWTDecode } from "@/utils/jwt";
 
 const DashboardHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const user = useAppSelector(useCurrentUser);
+  const { decoded } = JWTDecode();
+
   return (
     <div className="flex justify-between w-full md:px-8 px-4 items-center">
       <div>
         <h1>Welcome</h1>
-        <p className="font-medium">User Name</p>
+        <p className="font-medium">{decoded?.userName}</p>
       </div>
       <div className="flex items-center gap-2">
         <div className="text-2xl cursor-pointer bg-[#FAFAFA] rounded-full p-2">
-          <CiSearch
-            onClick={() => setSearchOpen(!searchOpen)}
-          
-          />
+          <CiSearch onClick={() => setSearchOpen(!searchOpen)} />
         </div>
         <div className="bg-[#FAFAFA] rounded-full p-2 cursor-pointer">
           <Bell onClick={() => setNotificationsOpen(!notificationsOpen)} />
@@ -41,7 +38,7 @@ const DashboardHeader = () => {
             alt="Profile Picture"
           />
           <div className="text-sm hidden md:block">
-            <h1 className="font-semibold">{user?.name}</h1>     
+            <h1 className="font-semibold">{decoded?.userName}</h1>
           </div>
           {isOpen && <ChevronUp />}
           {!isOpen && <ChevronDown />}

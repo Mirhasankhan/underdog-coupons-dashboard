@@ -1,22 +1,63 @@
 "use client";
 
 import { RestaurantFormValues } from "@/types/common";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { useCreateRestaurnatMutation } from "@/redux/features/restaurant/restaurantApi";
+import { toast } from "sonner";
 
 const AddRestaurant = ({
   setIsAdd,
 }: {
   setIsAdd: (value: boolean) => void;
 }) => {
+  const [createRestaurant] = useCreateRestaurnatMutation();
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [videoFiles, setVideoFiles] = useState<File[]>([]);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const filesArray = Array.from(event.target.files);
+
+      if (event.target.name === "images") {
+        setImageFiles(filesArray);
+      } else if (event.target.name === "videos") {
+        setVideoFiles(filesArray);
+      }
+    }
+  };
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<RestaurantFormValues>();
 
-  const onSubmit: SubmitHandler<RestaurantFormValues> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<RestaurantFormValues> = async (data) => {
+    if (imageFiles.length === 0 || videoFiles.length === 0) {
+      toast.error("An image and a video are required!");
+      return;
+    }
+
+    const formData = new FormData();
+    imageFiles.forEach((file) => formData.append("imageUrl", file));
+    videoFiles.forEach((file) => formData.append("videoUrl", file));
+
+    Object.keys(data).forEach((key) => {
+      const typedKey = key as keyof RestaurantFormValues;
+      if (data[typedKey] !== undefined) {
+        formData.append(typedKey, String(data[typedKey]));
+      }
+    });
+    const response = await createRestaurant(formData);
+    if (response.data.success == true) {
+      reset();
+      toast.success("Restaurant Added Successfully");
+    } else {
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -35,32 +76,25 @@ const AddRestaurant = ({
             <label className="block font-medium">Upload Image</label>
             <input
               type="file"
+              name="images"
+              onChange={handleFileChange}
               accept="image/*"
-              {...register("image", {
-                required: "Restaurant image is required",
-              })}
+              multiple
               className="w-full p-2 border rounded-md"
             />
-            {errors.image && (
-              <p className="text-red-500 text-sm">{errors.image.message}</p>
-            )}
           </div>
           <div className="mb-4">
             <label className="block font-medium">Upload Video</label>
             <input
               type="file"
+              name="videos"
+              onChange={handleFileChange}
               accept="video/*"
-              {...register("video", {
-                required: "Restaurant video is required",
-              })}
+              multiple
               className="w-full p-2 border rounded-md"
             />
-            {errors.video && (
-              <p className="text-red-500 text-sm">{errors.video.message}</p>
-            )}
           </div>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="mb-4">
             <label className="block font-medium">Restaurant Name</label>
@@ -90,8 +124,9 @@ const AddRestaurant = ({
           </div>
         </div>
 
+        {/* Review & Contact */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label className="block font-medium">Review</label>
             <select
               {...register("review", { required: "Please select a review" })}
@@ -107,7 +142,7 @@ const AddRestaurant = ({
             {errors.review && (
               <p className="text-red-500 text-sm">{errors.review.message}</p>
             )}
-          </div>
+          </div> */}
           <div className="mb-4">
             <label className="block font-medium">Phone</label>
             <input
@@ -128,6 +163,7 @@ const AddRestaurant = ({
           </div>
         </div>
 
+        {/* Buttons */}
         <div className="flex justify-end gap-4 mt-5">
           <button
             onClick={() => setIsAdd(false)}

@@ -1,9 +1,10 @@
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { FaStar } from "react-icons/fa";
 import { Progress } from "@/components/ui/progress";
 import { useAllReviewsQuery } from "@/redux/features/reviews/reviewApi";
+import { Rating } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
 
-const Rating = () => {
+const Ratings = () => {
   const { data: reviews } = useAllReviewsQuery("");
   const averageRating = reviews?.result?.reviews.length
     ? (
@@ -24,11 +25,10 @@ const Rating = () => {
         <div className="flex flex-col items-center p-3 border-r">
           <h1 className="text-3xl font-semibold">{averageRating}</h1>
           <div className="flex w-full justify-between text-orange-400 py-4 text-xl">
-            <FaStar></FaStar>
-            <FaStar></FaStar>
-            <FaStar></FaStar>
-            <FaStar></FaStar>
-            <FaStar></FaStar>
+            <Rating
+              style={{ maxWidth: 150 }}
+              value={Number(Number(averageRating).toFixed())}
+            />
           </div>
           <h1>({reviews?.result?.reviews.length} reviews)</h1>
         </div>
@@ -68,11 +68,10 @@ const Rating = () => {
               className="bg-gray-200 [&>*]:bg-green-500"
             />
           </div>
-          
         </div>
       </div>
     </div>
   );
 };
 
-export default Rating;
+export default Ratings;

@@ -4,7 +4,7 @@ const restaurantApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createRestaurnat: builder.mutation({
       query: (restaurantInfo) => ({
-        url: "/restaurant/create",
+        url: "/restaurant/create/test",
         method: "POST",
         body: restaurantInfo,
       }),
@@ -18,7 +18,7 @@ const restaurantApi = baseApi.injectEndpoints({
       providesTags: ["restaurant"],
     }),
     deleteRestaurant: builder.mutation({
-      query: ( id ) => ({
+      query: (id) => ({
         url: `/restaurant/delete/${id}`,
         method: "DELETE",
       }),
@@ -26,7 +26,7 @@ const restaurantApi = baseApi.injectEndpoints({
     }),
     updateRestaurant: builder.mutation({
       query: ({ id, updatedData }) => ({
-        url: `/restaurant/update/${id}`, 
+        url: `/restaurant/update/${id}`,
         method: "PUT",
         body: updatedData,
       }),
@@ -35,5 +35,9 @@ const restaurantApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useCreateRestaurnatMutation, useRestaurantsQuery,useDeleteRestaurantMutation,useUpdateRestaurantMutation } =
-  restaurantApi;
+export const {
+  useCreateRestaurnatMutation,
+  useRestaurantsQuery,
+  useDeleteRestaurantMutation,
+  useUpdateRestaurantMutation,
+} = restaurantApi;

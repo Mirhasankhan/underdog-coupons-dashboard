@@ -12,7 +12,7 @@ const UserDetails = ({ isOpen }: { isOpen: boolean }) => {
   const singOut = ()=>{
       dispatch(
           setUser({
-            name: "hasan",
+            name: "",
             email: "",
             role: "",
             token: "",

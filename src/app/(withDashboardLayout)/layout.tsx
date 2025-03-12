@@ -3,15 +3,15 @@
 import { useState } from "react";
 import Sidebar from "@/components/dashboard/Sidebar";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
-import { CircleHelp, LayoutDashboard, X } from "lucide-react";
+import { LayoutDashboard, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import Providers from "@/lib/providers/Providers";
 import logo from "../../assets/image 1.png";
+import SignOut from "@/components/dashboard/SignOut";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
-
 
   return (
     <Providers>
@@ -35,17 +35,14 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             </button>
           </div>
           <Sidebar setIsOpen={setIsOpen} isOpen={isOpen} />
-          <button className="flex items-center gap-2 text-[#718096] font-medium mx-10">
-            <CircleHelp />
-            Sign Out
-          </button>
+          <SignOut></SignOut>
         </div>
         <div
           className={`${
             !isOpen ? "col-span-5" : "hidden md:block"
           } md:col-span-4 bg-white h-full flex overflow-auto flex-col`}
         >
-          <div className="flex gap-3 py-2   bg-white border-l items-center px-3">
+          <div className="flex gap-3 py-2  bg-white  items-center px-3">
             <button className="md:hidden">
               <LayoutDashboard onClick={() => setIsOpen(!isOpen)} />
             </button>

@@ -31,7 +31,7 @@ const ReviewStatics = () => {
   return (
     <Card className="border-none shadow-[0px_4px_15px_rgba(255,69,58,0.15)]">
       <CardHeader>
-        <CardTitle className="text-2xl pb-2">Review & Statistics</CardTitle>
+        <CardTitle className="text-2xl pb-1">Review & Statistics</CardTitle>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1">
             <p className="h-4 w-4 rounded-full bg-red-500"></p>
@@ -63,7 +63,7 @@ const ReviewStatics = () => {
 
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent indicator="dot" />}
+              content={<ChartTooltipContent indicator="dashed" />}
             />
 
             <defs>
