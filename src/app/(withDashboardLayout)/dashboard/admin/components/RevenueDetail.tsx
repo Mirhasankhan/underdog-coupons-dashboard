@@ -43,15 +43,19 @@ const ReviewStatics = () => {
           </div>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="h-[190px] md:h-[300px]">
         <ChartContainer config={chartConfig}>
-          <AreaChart accessibilityLayer data={monthWiseData}>
+          <AreaChart
+            className="h-[400px]"
+            accessibilityLayer
+            data={monthWiseData}
+          >
             <CartesianGrid vertical={false} />
             <YAxis
               tickLine={false}
               axisLine={false}
               tickMargin={4}
-              domain={[0, 15]}
+              domain={[0, 10]}
             />
             <XAxis
               dataKey="month"

@@ -32,7 +32,7 @@ const OverView = () => {
         <div className="col-span-3 md:col-span-2">
           <Restaurant></Restaurant>
         </div>
-        <div className="col-span-4 md:col-span-1">
+        <div className="col-span-3 md:col-span-1">
           <Ratings></Ratings>
         </div>
       </div>

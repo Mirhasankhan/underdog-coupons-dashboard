@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import React from "react";
 import { FaStar } from "react-icons/fa";
 import { useRestaurantsQuery } from "@/redux/features/restaurant/restaurantApi";
@@ -23,13 +22,18 @@ const Restaurant = () => {
             className="grid grid-cols-1 border-b md:grid-cols-2 pt-4"
           >
             <div className="col-span-1 flex gap-4 items-center p-4">
-              <Image
+              {/* <Image
                 src={review.imageUrl}
                 className="rounded-lg"
-                height={50}
+                height={100}
                 width={100}
                 alt=""
-              ></Image>
+              ></Image> */}
+              <img
+                src={review.imageUrl}
+                className="h-24 md:h-36 w-24 md:w-36 rounded-lg"
+                alt=""
+              />
               <div>
                 <h1 className="text-xl font-medium">{review.restaurantName}</h1>
                 <div className="flex gap-2 items-center">

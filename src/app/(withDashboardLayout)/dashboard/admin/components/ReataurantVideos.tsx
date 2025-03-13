@@ -4,8 +4,12 @@ import { useState } from "react";
 
 const RestaurantVideos = () => {
   const { data: restaurants } = useRestaurantsQuery("");
+  const allUrls = restaurants?.result?.filter(
+    (restaurant: { videoUrl: string | null }) => restaurant.videoUrl !== null
+  );
+  console.log(allUrls);
   const videoUrls =
-    restaurants?.result?.map((restaurant: { videoUrl: string }) => ({
+    allUrls?.map((restaurant: { videoUrl: string }) => ({
       url: restaurant.videoUrl,
     })) || [];
 
@@ -13,8 +17,8 @@ const RestaurantVideos = () => {
 
   return (
     <div>
-      {restaurants?.result?.length > 0 ? (
-        <div className="shadow-[0px_4px_15px_rgba(255,69,58,0.15)] md:py-12 p-4 rounded-md">
+      {allUrls?.length > 0 ? (
+        <div className="shadow-[0px_4px_15px_rgba(255,69,58,0.15)] md:py-[36px] p-4 rounded-md">
           <div className="w-full">
             <video
               key={videoUrls[currentIndex].url}
@@ -34,7 +38,7 @@ const RestaurantVideos = () => {
                 onClick={() => setCurrentIndex(index)}
                 className={`rounded-full  text-white h-[8px] w-[8px] font-medium ${
                   currentIndex == index
-                    ? "bg-red-500 w-[20px]"
+                    ? "bg-red-500 w-[16px]"
                     : "bg-gray-500 hover:bg-red-600"
                 }`}
               ></h1>

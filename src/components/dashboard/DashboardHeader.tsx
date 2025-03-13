@@ -1,8 +1,6 @@
 import { Bell, ChevronDown, ChevronUp, CircleUserRound } from "lucide-react";
 import UserDetails from "./UserDetails";
 import { useState } from "react";
-import DashboardSearch from "./DashboardSearch";
-import DashboardNotifications from "./DashboardNotifications";
 import { CiSearch } from "react-icons/ci";
 import { JWTDecode } from "@/utils/jwt";
 
@@ -40,14 +38,14 @@ const DashboardHeader = () => {
       <div className="absolute top-20 right-8">
         <UserDetails isOpen={isOpen}></UserDetails>
       </div>
-      <div className="absolute top-20 right-8">
+      {/* <div className="absolute top-20 right-8">
         {!isOpen && <DashboardSearch searchOpen={searchOpen}></DashboardSearch>}
       </div>
       <div className="absolute top-20 right-8">
         {!isOpen && !searchOpen && (
           <DashboardNotifications notificationsOpen={notificationsOpen} />
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -5,7 +5,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {  Loader, Plus } from "lucide-react";
+import { Loader, Plus } from "lucide-react";
 import { useRestaurantsQuery } from "@/redux/features/restaurant/restaurantApi";
 import { TRestaurant } from "@/types/common";
 import Restaurant from "./Restaurant";
@@ -16,7 +16,6 @@ const AllRestaurants = ({
   setIsAdd: (value: boolean) => void;
 }) => {
   const { data: allRestaurants, isLoading } = useRestaurantsQuery("");
-
 
   if (isLoading) {
     return <Loader className="animate-spin mx-auto" size={80}></Loader>;
@@ -36,24 +35,31 @@ const AllRestaurants = ({
         </button>
       </div>
       <div>
-        {
-          allRestaurants?.result?.length > 0 ? <Table className="border rounded-md">
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Review</TableHead>
-              <TableHead>Loation</TableHead>
-              <TableHead>Contact</TableHead>
-              <TableHead>Status</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {allRestaurants?.result?.map((restaurant: TRestaurant) => (
-             <Restaurant key={restaurant.id} restaurant={restaurant}></Restaurant>
-            ))}
-          </TableBody>
-        </Table>:<p className="text-center text-red-600 text-2xl pt-12">No Restaurant Found</p>
-        }
+        {allRestaurants?.result?.length > 0 ? (
+          <Table className="border rounded-md">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Review</TableHead>
+                <TableHead>Loation</TableHead>
+                <TableHead>Contact</TableHead>
+                <TableHead>Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {allRestaurants?.result?.map((restaurant: TRestaurant) => (
+                <Restaurant
+                  key={restaurant.id}
+                  restaurant={restaurant}
+                ></Restaurant>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <p className="text-center text-red-600 text-2xl pt-12">
+            No Restaurant Found
+          </p>
+        )}
       </div>
     </div>
   );

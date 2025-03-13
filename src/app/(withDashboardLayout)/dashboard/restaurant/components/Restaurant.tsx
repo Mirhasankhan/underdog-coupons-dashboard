@@ -1,7 +1,6 @@
 import { Eye, Trash2 } from "lucide-react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { TableCell, TableRow } from "@/components/ui/table";
-import Image from "next/image";
 import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { TRestaurant } from "@/types/common";
@@ -23,13 +22,20 @@ const Restaurant = ({ restaurant }: { restaurant: TRestaurant }) => {
   return (
     <TableRow key={restaurant.id}>
       <TableCell className="text-[#2D2D2D] flex items-center gap-2">
-        <Image
+        {/* <Image
           className="rounded-full"
           alt=""
           src={restaurant.imageUrl}
           width={40}
           height={40}
-        ></Image>
+        ></Image> */}
+        <div className="p-1 rounded-full bg-[#BDBDBD]">
+          <img
+            src={restaurant.imageUrl}
+            className="h-8 w-8 rounded-full"
+            alt=""
+          />
+        </div>
         {restaurant.restaurantName}
       </TableCell>
       <TableCell>
@@ -61,10 +67,10 @@ const Restaurant = ({ restaurant }: { restaurant: TRestaurant }) => {
         {openMenuId === restaurant.id && (
           <div className="absolute top-0 right-0 flex gap-2 items-center bg-white shadow-md p-2 rounded">
             <button
-              onClick={() => handleDeleteRestaurant(restaurant.id)}   
-              className="border-r pr-2"          
+              onClick={() => handleDeleteRestaurant(restaurant.id)}
+              className="border-r pr-2"
             >
-              <Trash2/>
+              <Trash2 />
             </button>
             <UpdateModal restaurant={restaurant}></UpdateModal>
           </div>

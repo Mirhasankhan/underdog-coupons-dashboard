@@ -42,7 +42,7 @@ const UpdateModal = ({ restaurant }: { restaurant: TRestaurant }) => {
       updatedData: data,
     });
     console.log(res);
-    if (res.data.success == true) {     
+    if (res.data.success == true) {
       toast.success(res.data.message);
     } else {
       toast.error(res.data.message);

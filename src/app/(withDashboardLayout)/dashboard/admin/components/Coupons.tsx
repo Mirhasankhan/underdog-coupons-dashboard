@@ -27,7 +27,7 @@ const Coupons = () => {
   };
 
   return (
-    <div className="md:h-[435px] overflow-y-scroll rounded-md shadow-[0px_4px_15px_rgba(255,69,58,0.15)] p-4">
+    <div className="md:h-[415px] overflow-y-scroll rounded-md shadow-[0px_4px_15px_rgba(255,69,58,0.15)] p-4">
       <h1 className="text-xl font-medium pb-2">Unused Coupons</h1>
 
       <div>
@@ -42,7 +42,7 @@ const Coupons = () => {
                 <button
                   onClick={() => handleDeleteCoupon(coupon.id)}
                   disabled={processing == coupon.id ? true : false}
-                  className="text-[#F13300] font-medium px-3 pt-1 rounded-md bg-red-300"
+                  className="text-[#F13300] font-medium px-3 py-1 rounded-md bg-red-300"
                 >
                   {processing == coupon.id ? (
                     <Loader className="animate-spin text-gray-700"></Loader>

@@ -38,8 +38,8 @@ const AddRestaurant = ({
   } = useForm<RestaurantFormValues>();
 
   const onSubmit: SubmitHandler<RestaurantFormValues> = async (data) => {
-    if (imageFiles.length === 0 || videoFiles.length === 0) {
-      toast.error("An image and a video are required!");
+    if (imageFiles.length === 0) {
+      toast.error("An image is required!");
       return;
     }
     setIsloading(true);
