@@ -7,7 +7,6 @@ const RestaurantVideos = () => {
   const allUrls = restaurants?.result?.filter(
     (restaurant: { videoUrl: string | null }) => restaurant.videoUrl !== null
   );
-  console.log(allUrls);
   const videoUrls =
     allUrls?.map((restaurant: { videoUrl: string }) => ({
       url: restaurant.videoUrl,

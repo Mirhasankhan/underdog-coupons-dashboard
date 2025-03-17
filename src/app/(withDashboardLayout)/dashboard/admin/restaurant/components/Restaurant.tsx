@@ -36,7 +36,11 @@ const Restaurant = ({ restaurant }: { restaurant: TRestaurant }) => {
             alt=""
           />
         </div>
-        {restaurant.restaurantName}
+        <div>
+          <span className="font-medium m-0"> {restaurant.restaurantName}</span>
+          <br />
+          {restaurant?.owner?.email}
+        </div>
       </TableCell>
       <TableCell>
         <div className="flex gap-2 text-[#636F85] items-center">

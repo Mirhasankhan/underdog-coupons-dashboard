@@ -10,6 +10,7 @@ import { setUser } from "@/redux/features/auth/authSlice";
 import { toast } from "sonner";
 import { useState } from "react";
 import { Loader } from "lucide-react";
+import Cookies from "js-cookie";
 
 const AdminLogin = () => {
   const [loginAdmin] = useLoginMutation();
@@ -34,9 +35,12 @@ const AdminLogin = () => {
           token: response.data.result.accessToken,
         })
       );
-      localStorage.setItem("token", response.data.result.accessToken);
+      // localStorage.setItem("token", response.data.result.accessToken);
+      Cookies.set("token", response.data.result.accessToken, { expires: 7 });
       toast.success(response.data.message);
-      router.push("/dashboard/admin");
+      router.push(
+        `/dashboard/${response.data.result.userInfo.role.toLocaleLowerCase()}`
+      );
       setIsLoading(false);
     } else if (response.error) {
       toast.error("Invalid Email or password");

@@ -6,22 +6,31 @@ import { sidebarItems } from "@/utils/generateSidebarItems";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { JWTDecode } from "@/utils/jwt";
 
-const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (value: boolean) => void }) => {
+const Sidebar = ({
+  isOpen,
+  setIsOpen,
+}: {
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
+}) => {
   const pathName = usePathname();
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
+  const { decoded } = JWTDecode();
+  const role = decoded?.role?.toLocaleLowerCase();
 
   const toggleMenu = (path: string) => {
     setOpenMenus((prev) => ({ ...prev, [path]: !prev[path] }));
   };
 
   const handleLinkClick = () => {
-    setIsOpen(false); 
+    setIsOpen(false);
   };
 
   return (
     <div>
-      {sidebarItems("admin" as TRoles).map((item, index) => (
+      {sidebarItems(role as TRoles).map((item, index) => (
         <div key={index}>
           {item.children && item.children.length > 0 ? (
             <div
@@ -36,15 +45,21 @@ const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (value: bo
 
               <h1 className="pl-1">{item.title}</h1>
               <span className="ml-auto">
-                {openMenus[item.path] ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                {openMenus[item.path] ? (
+                  <ChevronUp size={18} />
+                ) : (
+                  <ChevronDown size={18} />
+                )}
               </span>
             </div>
           ) : (
             <Link href={`/dashboard${item.path}`} passHref>
               <div
-                onClick={handleLinkClick} 
+                onClick={handleLinkClick}
                 className={`cursor-pointer ${
-                  pathName === `/dashboard${item.path}` ? "bg-[#F13300] font-medium !text-white" : ""
+                  pathName === `/dashboard${item.path}`
+                    ? "bg-[#F13300] font-medium !text-white"
+                    : ""
                 } hover:bg-[#F13300]  font-medium hover:text-white my-4 ${
                   !isOpen && "justify-center md:justify-start"
                 } p-2 py-3 mx-8 rounded-xl text-[#718096] flex items-center`}
@@ -63,10 +78,14 @@ const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (value: bo
                   <div
                     onClick={handleLinkClick} // Close sidebar when clicked
                     className={`p-2 mx-3 rounded-md flex items-center font-medium hover:text-[#FA7E34] ${
-                      pathName === `/dashboard${child.path}` ? " text-[#FA7E34]" : ""
+                      pathName === `/dashboard${child.path}`
+                        ? " text-[#FA7E34]"
+                        : ""
                     }`}
                   >
-                    {isOpen && <span className="ml-2 md:hidden">{child.title}</span>}
+                    {isOpen && (
+                      <span className="ml-2 md:hidden">{child.title}</span>
+                    )}
                     {child.icon && <p className="text-xl">{<child.icon />}</p>}
                     <span className="ml-2 hidden md:block">{child.title}</span>
                   </div>
@@ -81,8 +100,6 @@ const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (value: bo
 };
 
 export default Sidebar;
-
-
 
 // "use client";
 

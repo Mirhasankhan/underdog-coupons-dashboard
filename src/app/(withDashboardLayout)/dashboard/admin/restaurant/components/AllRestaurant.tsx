@@ -40,7 +40,7 @@ const AllRestaurants = ({
             <TableHeader>
               <TableRow>
                 <TableHead>Name</TableHead>
-                <TableHead>Review</TableHead>
+                <TableHead>Email</TableHead>
                 <TableHead>Loation</TableHead>
                 <TableHead>Contact</TableHead>
                 <TableHead>Status</TableHead>

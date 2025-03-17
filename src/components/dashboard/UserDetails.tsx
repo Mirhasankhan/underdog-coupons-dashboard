@@ -5,6 +5,7 @@ import { setUser } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
 import { JWTDecode } from "@/utils/jwt";
 import { CircleUserRound } from "lucide-react";
+import Cookies from "js-cookie";
 
 const UserDetails = ({ isOpen }: { isOpen: boolean }) => {
   const router = useRouter();
@@ -19,7 +20,8 @@ const UserDetails = ({ isOpen }: { isOpen: boolean }) => {
         token: "",
       })
     );
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
+    Cookies.remove("token");
     router.push("/");
   };
   return (

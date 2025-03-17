@@ -11,8 +11,8 @@ const restaurantApi = baseApi.injectEndpoints({
       invalidatesTags: ["restaurant"],
     }),
     restaurants: builder.query({
-      query: () => ({
-        url: `/restaurant`,
+      query: (email) => ({
+        url: `/restaurant?email=${email}`,
         method: "GET",
       }),
       providesTags: ["restaurant"],

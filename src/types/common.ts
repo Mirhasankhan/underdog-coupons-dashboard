@@ -54,6 +54,8 @@ export interface RestaurantFormValues {
 export interface TLoginValues {
   email: string;
   password: string;
+  newPassword: string;
+  oldPassword: string;
 }
 
 export interface TCoupon {
@@ -77,4 +79,13 @@ export interface TRestaurant {
   reviews: [
     { userName: string; rating: number; comment?: string; createdAt: string }
   ];
+  owner: { email: string };
+}
+
+export interface TReview {
+  userName: string;
+  id: string;
+  comment: string;
+  rating: number;
+  createdAt: string;
 }

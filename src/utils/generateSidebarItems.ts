@@ -3,11 +3,14 @@ import { userRoles } from "./roles";
 import { MdDashboard } from "react-icons/md";
 import { CiUser } from "react-icons/ci";
 import { GoPackage } from "react-icons/go";
-import { CiCirclePlus } from "react-icons/ci";
-import { LuTableProperties } from "react-icons/lu";
-import { FcSalesPerformance } from "react-icons/fc";
 import { RiHome5Fill } from "react-icons/ri";
-import { Bell, Dock, FileChartColumn } from "lucide-react";
+import {
+  Bell,
+  Dock,
+  FileChartColumn,
+  FilePenLine,
+  UserRoundPen,
+} from "lucide-react";
 
 export const sidebarItems = (role: TRoles): SidbarItem[] => {
   const roleMenus: SidbarItem[] = [];
@@ -21,17 +24,17 @@ export const sidebarItems = (role: TRoles): SidbarItem[] => {
       });
       roleMenus.push({
         title: "Coupon",
-        path: `/coupon`,
+        path: `/${role}/coupon`,
         icon: Bell,
       });
       roleMenus.push({
         title: "Restaurant",
-        path: `/restaurant`,
+        path: `/${role}/restaurant`,
         icon: Dock,
       });
       roleMenus.push({
         title: "Review",
-        path: `/review`,
+        path: `/${role}/review`,
         icon: FileChartColumn,
       });
 
@@ -46,28 +49,19 @@ export const sidebarItems = (role: TRoles): SidbarItem[] => {
       roleMenus.push({
         title: "Dashboard",
         path: `/${role}`,
-        icon: MdDashboard,
+        icon: RiHome5Fill,
       });
       roleMenus.push({
-        title: "Create Listing",
-        path: `/${role}/create-listing`,
-        icon: CiCirclePlus,
+        title: "Update Restaurant",
+        path: `/${role}/update`,
+        icon: FilePenLine,
       });
       roleMenus.push({
-        title: "Manage Properties",
-        path: `/${role}/manage-property`,
-        icon: LuTableProperties,
+        title: "Change Password",
+        path: `/${role}/change`,
+        icon: UserRoundPen,
       });
-      roleMenus.push({
-        title: "Manage Sales",
-        path: `/${role}/manage-sales`,
-        icon: FcSalesPerformance,
-      });
-      roleMenus.push({
-        title: "My Profile",
-        path: `/${role}/manage-profile`,
-        icon: CiUser,
-      });
+
       break;
     case userRoles.USER:
       roleMenus.push({

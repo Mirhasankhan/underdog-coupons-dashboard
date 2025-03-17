@@ -2,7 +2,7 @@ import { setUser } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { CircleHelp } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
+import Cookies from "js-cookie";
 
 const SignOut = () => {
   const router = useRouter();
@@ -16,7 +16,8 @@ const SignOut = () => {
         token: "",
       })
     );
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
+    Cookies.remove("token");
     router.push("/");
   };
   return (
