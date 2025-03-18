@@ -1,17 +1,57 @@
 import { useAllReviewsQuery } from "@/redux/features/reviews/reviewApi";
 import { TReview } from "@/types/common";
-import { Rating } from "@smastrom/react-rating";
-import { format } from "date-fns";
 import "@smastrom/react-rating/style.css";
-import { MessageCircle } from "lucide-react";
+
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableCell,
+} from "@/components/ui/table";
+import { FaStar } from "react-icons/fa";
 
 const ReviewDetails = ({ restaurantId }: { restaurantId: string }) => {
   const { data: myReviews } = useAllReviewsQuery(restaurantId);
 
   return (
-    <div>
-      <h1 className="text-2xl pb-6">All Reviews</h1>
-      <div className="shadow-[0px_4px_15px_rgba(255,69,58,0.15)] p-3 h-[440px] overflow-y-scroll">
+    <div className="border rounded-lg">
+      <h1 className="text-2xl font-medium p-6 border-b">Customer Reviews</h1>
+      <div>
+        {myReviews?.result?.reviews?.length > 0 ? (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Customer Name</TableHead>
+                <TableHead>Rating</TableHead>
+                <TableHead>Comment</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {myReviews?.result?.reviews?.map((review: TReview) => (
+                <TableRow key={review.id}>
+                  <TableCell className="font-medium md:w-48">
+                    {review.userName}
+                  </TableCell>
+                  <TableCell className=" md:w-40">
+                    <div className="flex gap-2 text-[#636F85] items-center">
+                      <FaStar className="text-orange-400" />
+                      <h1>{review.rating}</h1>
+                    </div>
+                  </TableCell>
+                  <TableCell>{review.comment}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <p className="text-center text-red-600 text-2xl pt-12">
+            No Restaurant Found
+          </p>
+        )}
+      </div>
+      {/* <div className="shadow-[0px_4px_15px_rgba(255,69,58,0.15)] p-3 h-screen overflow-y-scroll">
         {myReviews?.result?.reviews?.length > 0 ? (
           <div className="grid md:grid-cols-1 gap-5 w-full">
             {myReviews?.result?.reviews?.map((review: TReview) => (
@@ -36,7 +76,7 @@ const ReviewDetails = ({ restaurantId }: { restaurantId: string }) => {
         ) : (
           "No Reviews to show"
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

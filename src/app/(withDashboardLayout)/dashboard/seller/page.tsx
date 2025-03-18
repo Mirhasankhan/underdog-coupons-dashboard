@@ -16,12 +16,12 @@ const SellerDashboard = () => {
   }
   return (
     <div>
-      <TotalReview restaurantId={restaurant?.result[0].id}></TotalReview>
-      <div className="grid grid-cols-4 gap-6 mt-12">
-        <div className="col-span-3 md:col-span-2">
+      <div className="grid grid-cols-4 gap-8 mt-12">
+        <div className="col-span-4 md:col-span-2">
+          <TotalReview restaurantId={restaurant?.result[0].id}></TotalReview>
           <Reviews restaurantId={restaurant?.result[0].id}></Reviews>
         </div>
-        <div className="col-span-3 md:col-span-2">
+        <div className="col-span-4 md:col-span-2">
           <ReviewDetails
             restaurantId={restaurant?.result[0].id}
           ></ReviewDetails>
